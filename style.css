@@ -1,0 +1,163 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0a1f2d;
+  color: #f5f5dc;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: #ffd700;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+#camara {
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  margin: 0 auto;
+  border: 4px solid #cd7f32;
+  border-radius: 10px;
+  background-color: #1c2e40;
+  position: relative;
+  overflow: hidden;
+}
+
+#camara video,
+#camara canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+#scanResult {
+  margin-top: 15px;
+  font-size: 18px;
+  text-align: center;
+  color: #ffd700;
+}
+
+.botones {
+  text-align: center;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+button {
+  background-color: #cd7f32;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 5px;
+  min-width: 140px;
+}
+
+button:hover {
+  background-color: #b06a29;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1c2e40;
+  min-width: 600px;
+}
+
+th, td {
+  border: 1px solid #cd7f32;
+  padding: 10px;
+  text-align: center;
+  color: #f5f5dc;
+  white-space: nowrap;
+}
+
+th {
+  background-color: #cd7f32;
+  color: #fff;
+}
+
+input[type="text"] {
+  background-color: #0a1f2d;
+  color: #f5f5dc;
+  border: 1px solid #cd7f32;
+  padding: 6px;
+  border-radius: 4px;
+  width: 100px;
+}
+.archivo {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.archivo label {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #ffd700;
+}
+
+.archivo input[type="file"] {
+  background-color: #1c2e40;
+  color: #f5f5dc;
+  border: 1px solid #cd7f32;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+/* 🔁 RESPONSIVE ADAPTATIONS */
+@media (max-width: 768px) {
+  #camara {
+    height: 300px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px 12px;
+    min-width: 120px;
+  }
+
+  input[type="text"] {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  #camara {
+    height: 220px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 6px 10px;
+    min-width: 100px;
+  }
+
+  th, td {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  input[type="text"] {
+    width: 70px;
+    font-size: 14px;
+  }
+}

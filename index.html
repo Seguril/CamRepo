@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Escáner de Contenedores</title>
+</head>
+<body>
+  <h1>📷 Escáner de Contenedores</h1>
+<div class="botones">
+  <button onclick="iniciarCamara()">▶️ Iniciar escaneo</button>
+  <button onclick="detenerCamara()">⏹️ Detener escaneo</button>
+  <button onclick="descargarArchivoDat()">📥 Descargar archivo .dat</button>
+</div>
+
+<div class="archivo">
+  <label style="border: solid; margin-bottom: 20px;" for="archivoDat">📂 Cargar archivo .dat:</label>
+  <input style="display: none;" type="file" id="archivoDat" accept=".dat" onchange="cargarArchivoDat()" />
+</div>
+  <div sty id="camara"></div>
+  <div id="scanResult">Esperando escaneo...</div>
+
+<div class="table-wrapper">
+  <table id="tablaContenedores">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Código</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+  <script src="script.js" ></script>
+</body>
+</html>
