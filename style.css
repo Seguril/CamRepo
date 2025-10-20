@@ -10,18 +10,17 @@ h1 {
   color: #ffd700;
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 #camara {
   width: 100%;
   max-width: 800px;
   height: 400px;
-  margin: 0 auto;
+  margin: 20px auto 0;
   border: 4px solid #cd7f32;
   border-radius: 10px;
   background-color: #1c2e40;
-  position: relative;
   overflow: hidden;
 }
 
@@ -35,32 +34,10 @@ h1 {
 }
 
 #scanResult {
-  margin-top: 15px;
+  text-align: center;
   font-size: 18px;
-  text-align: center;
+  margin: 10px 0;
   color: #ffd700;
-}
-
-.botones {
-  text-align: center;
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
-
-button {
-  background-color: #cd7f32;
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  font-size: 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 5px;
-  min-width: 140px;
-}
-
-button:hover {
-  background-color: #b06a29;
 }
 
 .table-wrapper {
@@ -96,15 +73,28 @@ input[type="text"] {
   border-radius: 4px;
   width: 100px;
 }
+
 .archivo {
+  margin-top: 20px;
   text-align: center;
-  margin-top: 10px;
 }
 
 .archivo label {
   font-weight: bold;
   margin-right: 10px;
-  color: #ffd700;
+  color: #f0efea;
+   background-color: #96724d;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 5px;
+  min-width: 140px;
+}
+.archivo label:hover {
+  background-color: #b06a29;
 }
 
 .archivo input[type="file"] {
@@ -114,15 +104,53 @@ input[type="text"] {
   padding: 6px;
   border-radius: 6px;
   font-size: 14px;
+  display: none;
 }
-/* 🔁 RESPONSIVE ADAPTATIONS */
-@media (max-width: 768px) {
-  #camara {
-    height: 300px;
-  }
 
+button {
+  background-color: #cd7f32;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 5px;
+  min-width: 140px;
+}
+
+button:hover {
+  background-color: #b06a29;
+}
+
+.boton-flotante {
+  position: fixed;
+  bottom: 80px; /* altura cómoda en escritorio */
+  right: 20px;
+  background-color: #c49f0a;
+  color: white;
+  border: solid;
+  padding: 14px 20px;
+  font-size: 18px;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+  z-index: 999;
+}
+
+.boton-flotante:hover {
+  background-color: #005A9E;
+}
+
+
+/* 🔁 Responsive Adaptations */
+@media (max-width: 768px) {
   h1 {
     font-size: 1.6rem;
+  }
+
+  #camara {
+    height: 300px;
   }
 
   button {
@@ -134,30 +162,45 @@ input[type="text"] {
   input[type="text"] {
     width: 80px;
   }
+
+.boton-flotante {
+    bottom: 100px; /* más alto para evitar el borde inferior */
+    right: 15px;
+    padding: 12px 18px;
+    font-size: 16px;
+  }
+
 }
 
 @media (max-width: 480px) {
-  #camara {
-    height: 220px;
-  }
-
   h1 {
     font-size: 1.4rem;
   }
 
+  #camara {
+    height: 220px;
+  }
+
   button {
-    font-size: 14px;
+    font-size: 13px;
     padding: 6px 10px;
     min-width: 100px;
   }
 
   th, td {
-    font-size: 14px;
+    font-size: 13px;
     padding: 6px;
   }
 
   input[type="text"] {
     width: 70px;
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  .boton-flotante {
+    bottom: 90px; /* altura ideal para el pulgar en móviles */
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 15px;
   }
 }
