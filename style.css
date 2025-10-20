@@ -127,7 +127,7 @@ button:hover {
   position: fixed;
   bottom: 80px;
   right: 20px;
-  background-color: #0078D4;
+  background-color: #0078d408;
   color: white;
   border: none;
   padding: 14px 20px;
@@ -139,7 +139,7 @@ button:hover {
 }
 
 .boton-flotante:hover {
-  background-color: #005A9E;
+  background-color: #9e1800;
 }
 
 /* 📱 Responsive para móviles */
@@ -171,10 +171,15 @@ button:hover {
   .boton-flotante {
     bottom: 90px;
     right: 15px;
-    padding: 12px 18px;
+    padding: 35px 25px;
     font-size: 16px;
+    border-radius: 100%;
+    border: solid rgb(211, 36, 36);
+    
   }
-
+.boton-flotante:hover {
+  background-color: #005a9e31;
+}
   .archivo label {
     font-size: 14px;
     padding: 8px 12px;
