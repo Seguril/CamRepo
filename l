@@ -41,14 +41,15 @@ h1 {
 }
 
 .table-wrapper {
-  margin-top: 20px;
   overflow-x: auto;
+  margin-top: 20px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   background-color: #1c2e40;
+  min-width: 600px;
 }
 
 th, td {
@@ -80,7 +81,9 @@ input[type="text"] {
 
 .archivo label {
   font-weight: bold;
-  background-color: #96724d;
+  margin-right: 10px;
+  color: #f0efea;
+   background-color: #96724d;
   color: #fff;
   border: none;
   padding: 10px 16px;
@@ -88,14 +91,19 @@ input[type="text"] {
   border-radius: 6px;
   cursor: pointer;
   margin: 5px;
-  display: inline-block;
+  min-width: 140px;
 }
-
 .archivo label:hover {
   background-color: #b06a29;
 }
 
 .archivo input[type="file"] {
+  background-color: #1c2e40;
+  color: #f5f5dc;
+  border: 1px solid #cd7f32;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 14px;
   display: none;
 }
 
@@ -115,17 +123,9 @@ button:hover {
   background-color: #b06a29;
 }
 
-.botones {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-}
-
 .boton-flotante {
   position: fixed;
-  bottom: 80px;
+  bottom: 80px; /* altura cómoda en escritorio */
   right: 20px;
   background-color: #0078D4;
   color: white;
@@ -141,8 +141,6 @@ button:hover {
 .boton-flotante:hover {
   background-color: #005A9E;
 }
-
-/* 📱 Responsive para móviles */
 @media (max-width: 700px) {
   h1 {
     font-size: 1.5rem;
@@ -164,34 +162,14 @@ button:hover {
   }
 
   input[type="text"] {
-    width: 80px;
+    width: 700px;
     font-size: 13px;
   }
 
   .boton-flotante {
-    bottom: 90px;
+    bottom: 90px; /* Altura cómoda para el pulgar */
     right: 15px;
     padding: 12px 18px;
     font-size: 16px;
-  }
-
-  .archivo label {
-    font-size: 14px;
-    padding: 8px 12px;
-    min-width: 100px;
-    margin-top: 20px;
-  }
-
-  .botones {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  table {
-    min-width: unset;
-  }
-
-  .table-wrapper {
-    overflow-x: auto;
   }
 }
