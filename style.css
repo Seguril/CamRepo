@@ -125,14 +125,14 @@ button:hover {
 
 .boton-flotante {
   position: fixed;
-  bottom: 80px; /* altura cómoda en escritorio */
-  right: 20px;
-  background-color: #c49f0a;
+  bottom: 1000px; /* altura cómoda en escritorio */
+  right: 150px;
+  background-color: #c49f0a52;
   color: white;
   border: solid;
-  padding: 14px 20px;
-  font-size: 18px;
-  border-radius: 50px;
+  padding: 100px 100px;
+  font-size: 50px;
+  border-radius: 100%;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   cursor: pointer;
   z-index: 999;
@@ -164,7 +164,7 @@ button:hover {
   }
 
 .boton-flotante {
-    bottom: 100px; /* más alto para evitar el borde inferior */
+    bottom: 900px; /* más alto para evitar el borde inferior */
     right: 15px;
     padding: 12px 18px;
     font-size: 16px;
@@ -198,7 +198,7 @@ button:hover {
   }
 
   .boton-flotante {
-    bottom: 90px; /* altura ideal para el pulgar en móviles */
+    bottom: 900px; /* altura ideal para el pulgar en móviles */
     right: 15px;
     padding: 10px 16px;
     font-size: 15px;
