@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="style.css">
+  <title>📦 Lector de Palets con Ubicación</title>
+</head>
+<body>
+  <h1>📦 Escaneo de Palets con Ubicación</h1>
+
+<div class="archivo">
+  <label>📍 Ubicación actual:</label>
+  <input type="text" id="ubicacion" placeholder="Ej. Zona A o Camión 3">
+  <br>
+
+  <!-- <input style="display: inline-block;" type="file" id="archivoDat" accept=".dat" />
+  <button onclick="cargarArchivoDat()">📂 Cargar archivo .DAT</button> -->
+  <button onclick="descargarArchivoDat()">💾 Descargar .DAT</button>
+  <button id="btnCargar">📂 Cargar archivo .DAT</button>
+  <input type="file" id="archivoDat" accept=".dat" style="display:none;">
+</div>
+
+  <div id="camara">
+  <div id="overlay">
+    <div id="crosshair"></div>
+    <div id="mensajeCamara">📡 Iniciando cámara...</div>
+  </div>
+</div>
+
+  <p id="scanResult">📡 Esperando cámara...</p>
+
+  <table id="tablaContenedores">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Código</th>
+        <th>Fecha</th>
+        <th>Ubicación</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+<script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
+  <script src="script1.js"></script>
+</body> 
+</html>

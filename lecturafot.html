@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📦 Escaneo Múltiple de Imagen - Palet</title>
+  <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9/dist/dbr.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 10px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+    td, th { border: 1px solid #ccc; padding: 5px; text-align: center; }
+    #preview { max-width: 400px; margin-top: 10px; border: 2px solid #ddd; }
+  </style>
+</head>
+<body>
+  <h2>📸 Escaneo Múltiple desde Imagen (Dynamsoft)</h2>
+  <input type="file" id="archivoImg" accept="image/*">
+  <button onclick="procesarArchivo()">📷 Escanear Imagen</button>
+  <p id="scanResult">📡 Esperando imagen...</p>
+  <img id="preview" alt="Vista previa" />
+
+  <table id="tablaContenedores">
+    <thead><tr><th>#</th><th>Código</th><th>Fecha</th><th>Acción</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const codigosRegistrados = {};
+
+    async function escanearImagen(file) {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        // Mostrar vista previa
+        document.getElementById('preview').src = e.target.result;
+        document.getElementById('scanResult').textContent = "🔍 Escaneando...";
+
+        try {
+          // Crear instancia del lector
+          const dbr = await Dynamsoft.DBR.BarcodeReader.createInstance();
+          const results = await dbr.decode(e.target.result);
+
+          if (results.length === 0) {
+            document.getElementById('scanResult').textContent = "❌ No se detectaron códigos";
+            return;
+          }
+
+          const tabla = document.querySelector('#tablaContenedores tbody');
+          results.forEach((r) => {
+            const codigo = r.barcodeText.trim();
+            if (!codigosRegistrados[codigo]) {
+              const fecha = new Date().toLocaleString();
+              codigosRegistrados[codigo] = fecha;
+              const fila = document.createElement('tr');
+              fila.innerHTML = `<td></td><td>${codigo}</td><td>${fecha}</td><td>✅</td>`;
+              tabla.prepend(fila);
+            }
+          });
+
+          actualizarNumeracion();
+          document.getElementById('scanResult').textContent = `✅ ${results.length} códigos detectados`;
+        } catch (err) {
+          console.error("Error:", err);
+          document.getElementById('scanResult').textContent = "⚠️ Error al leer códigos";
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function actualizarNumeracion() {
+      document.querySelectorAll('#tablaContenedores tbody tr').forEach((fila, i) => {
+        fila.cells[0].textContent = i + 1;
+      });
+    }
+
+    function procesarArchivo() {
+      const file = document.getElementById('archivoImg').files[0];
+      if (file) escanearImagen(file);
+      else alert("Selecciona una imagen primero");
+    }
+  </script>
+</body>
+</html>

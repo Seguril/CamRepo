@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Escaneo Secuencial - Palet</title>
+  <script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
+  <style>
+    #camara { width: 100%; max-width: 480px; border: 2px solid #333; margin-bottom: 10px; }
+    table { border-collapse: collapse; width: 100%; }
+    td, th { border: 1px solid #ccc; padding: 5px; text-align: center; }
+  </style>
+</head>
+<body>
+  <h2>📦 Escaneo Secuencial de Contenedores</h2>
+  <div id="camara"></div>
+  <p id="scanResult">📡 Esperando cámara...</p>
+
+  <table id="tablaContenedores">
+    <thead><tr><th>#</th><th>Código</th><th>Fecha</th><th>Acción</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const codigosRegistrados = {};
+
+    function iniciarCamara() {
+      Quagga.init({
+        inputStream: {
+          name: "Live",
+          type: "LiveStream",
+          target: document.querySelector('#camara'),
+          constraints: { facingMode: "environment" }
+        },
+        decoder: { readers: ["code_39_reader", "code_128_reader", "ean_reader"] }
+      }, function (err) {
+        if (err) { console.error(err); alert("Error al iniciar cámara"); return; }
+        Quagga.start();
+        document.getElementById('scanResult').textContent = "📡 Escaneo activo...";
+      });
+    }
+
+    function agregarContenedor(codigo) {
+      const fecha = new Date().toLocaleString();
+      codigosRegistrados[codigo] = fecha;
+      const tabla = document.querySelector('#tablaContenedores tbody');
+      const fila = document.createElement('tr');
+      fila.innerHTML = `<td></td><td>${codigo}</td><td>${fecha}</td><td>✅</td>`;
+      tabla.prepend(fila);
+      actualizarNumeracion();
+    }
+
+    function actualizarNumeracion() {
+      document.querySelectorAll('#tablaContenedores tbody tr').forEach((fila, i) => {
+        fila.cells[0].textContent = i + 1;
+      });
+    }
+
+    Quagga.onDetected(function (data) {
+      let codigo = data.codeResult.code.replace(/^[A-Za-z]+/, '');
+      if (/^\d+$/.test(codigo)) {
+        if (!codigosRegistrados[codigo]) {
+          agregarContenedor(codigo);
+          document.getElementById('scanResult').textContent = `✅ Contenedor ${codigo} agregado`;
+        } else {
+          document.getElementById('scanResult').textContent = `⚠️ Ya registrado: ${codigo}`;
+        }
+      }
+    });
+
+    window.onload = iniciarCamara;
+  </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>📦 Escaneo Múltiple de Imagen - ZXing (Open Source)</title>
+  <script src="https://unpkg.com/@zxing/browser@latest"></script>
+  <style>
+    body { font-family: Arial; margin: 30px; background: #f5f5f5; color: #333; }
+    h2 { text-align: center; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; background: white; }
+    td, th { border: 1px solid #ccc; padding: 6px; text-align: center; }
+    th { background: #eee; }
+    button {
+      padding: 8px 12px; cursor: pointer; border: none;
+      background: #0078d7; color: white; border-radius: 5px; transition: 0.2s;
+    }
+    button:hover { background: #005fa3; }
+    #scanResult { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+
+<body>
+  <h2>📸 Escaneo Múltiple de Imagen (ZXing)</h2>
+
+  <input type="file" id="archivoImg" accept="image/*">
+  <button onclick="procesarArchivo()">📷 Escanear Imagen</button>
+  <p id="scanResult">📡 Esperando imagen...</p>
+
+  <table id="tablaContenedores">
+    <thead>
+      <tr><th>#</th><th>Código</th><th>Fecha</th><th>Acción</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const codigosRegistrados = {};
+    const codeReader = new ZXingBrowser.BrowserMultiFormatReader();
+
+    async function escanearImagen(file) {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const img = new Image();
+        img.src = e.target.result;
+
+        img.onload = async () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          const ancho = img.width;
+          const alto = img.height;
+          const secciones = 3; // 👈 número de zonas horizontales
+          const resultados = [];
+
+          for (let i = 0; i < secciones; i++) {
+            const y = (alto / secciones) * i;
+            const h = alto / secciones;
+
+            const parteCanvas = document.createElement('canvas');
+            parteCanvas.width = ancho;
+            parteCanvas.height = h;
+            const parteCtx = parteCanvas.getContext('2d');
+            parteCtx.drawImage(canvas, 0, y, ancho, h, 0, 0, ancho, h);
+
+            try {
+              const result = await codeReader.decodeFromCanvas(parteCanvas);
+              resultados.push(result);
+            } catch (err) {
+              // no pasa nada si una sección no tiene código
+            }
+          }
+
+          if (resultados.length > 0) {
+            procesarResultados(resultados);
+          } else {
+            document.getElementById('scanResult').textContent = "❌ No se detectaron códigos";
+          }
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function procesarResultados(results) {
+      const tabla = document.querySelector('#tablaContenedores tbody');
+      results.forEach(result => {
+        const codigo = result.text.trim();
+        if (!codigosRegistrados[codigo]) {
+          const fecha = new Date().toLocaleString();
+          codigosRegistrados[codigo] = fecha;
+          const fila = document.createElement('tr');
+          fila.innerHTML = `<td></td><td>${codigo}</td><td>${fecha}</td><td>✅</td>`;
+          tabla.prepend(fila);
+        }
+      });
+      actualizarNumeracion();
+      document.getElementById('scanResult').textContent = `✅ ${results.length} código(s) detectado(s)`;
+    }
+
+    function actualizarNumeracion() {
+      document.querySelectorAll('#tablaContenedores tbody tr').forEach((fila, i) => {
+        fila.cells[0].textContent = i + 1;
+      });
+    }
+
+    function procesarArchivo() {
+      const file = document.getElementById('archivoImg').files[0];
+      if (file) {
+        document.getElementById('scanResult').textContent = "🔍 Escaneando...";
+        escanearImagen(file);
+      } else {
+        alert("Selecciona una imagen primero.");
+      }
+    }
+  </script>
+</body>
+</html>
+ 

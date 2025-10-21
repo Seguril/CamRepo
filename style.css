@@ -200,3 +200,59 @@ button:hover {
     overflow-x: auto;
   }
 }
+
+
+/* === 🟡 OVERLAY DE CÁMARA Y CRUZ DE ENFOQUE === */
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* permite usar la cámara */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#crosshair {
+  width: 120px;
+  height: 120px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Mensaje dentro del área de cámara */
+#mensajeCamara {
+  position: absolute;
+  bottom: 250px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fffbe6;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  min-width: 220px;
+  max-width: 90%;
+  transition: background 0.3s ease;
+  font-weight: bold;
+  border: 1px solid #cd7f32;
+}
+
+/* Animación sutil de parpadeo al mostrar mensaje */
+#mensajeCamara.flash {
+  animation: flashMsg 0.3s ease;
+}
+
+@keyframes flashMsg {
+  0% { opacity: 0.4; transform: translateX(-50%) scale(0.95); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1); }
+}
