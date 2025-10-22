@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Unificador de archivos .dat</title>
+</head>
+<body>
+  <h2>Unir y convertir archivos .dat</h2>
+
+  <label>Archivo 1:</label>
+  <input type="file" id="archivo1" accept=".txt,.dat"><br><br>
+
+  <label>Archivo 2:</label>
+  <input type="file" id="archivo2" accept=".txt,.dat"><br><br>
+
+  <button onclick="procesarArchivos()">Unir y Descargar</button>
+
+  <script>
+    function leerArchivo(file) {
+      return new Promise((resolve, reject) => {
+        const lector = new FileReader();
+        lector.onload = () => resolve(lector.result);
+        lector.onerror = () => reject(lector.error);
+        lector.readAsText(file);
+      });
+    }
+
+    function convertirLinea(linea) {
+      // Detecta si es del formato extendido
+      if (linea.includes("ESTADO")) {
+        const partes = linea.split(" ");
+        const codigo = partes[0];
+        const id = partes[1];
+        const fecha = linea.includes("PRESTAMO") ? linea.split("PRESTAMO ")[1] : null;
+        const fechaFormateada = fecha
+        ? new Date(fecha).toLocaleString("es-ES", { hour12: true })
+        : new Date().toLocaleString("es-ES", { hour12: true });
+       const idLimpio = id.startsWith("A") ? id.slice(1) : id;
+       return `${idLimpio}|${fechaFormateada}|${codigo}`;
+
+      } else {
+        return linea.trim(); // Ya está en formato correcto
+      }
+    }
+
+    async function procesarArchivos() {
+      const archivo1 = document.getElementById("archivo1").files[0];
+      const archivo2 = document.getElementById("archivo2").files[0];
+
+      if (!archivo1 || !archivo2) {
+        alert("Por favor selecciona ambos archivos.");
+        return;
+      }
+
+      const contenido1 = await leerArchivo(archivo1);
+      const contenido2 = await leerArchivo(archivo2);
+
+      const lineas1 = contenido1.split(/\r?\n/).filter(l => l.trim());
+      const lineas2 = contenido2.split(/\r?\n/).filter(l => l.trim());
+
+      const todas = [...lineas1, ...lineas2].map(convertirLinea);
+
+      const resultado = todas.join("\n");
+      const blob = new Blob([resultado], { type: "text/plain" });
+      const enlace = document.createElement("a");
+      enlace.href = URL.createObjectURL(blob);
+      enlace.download = "unificado.dat";
+      enlace.click();
+    }
+  </script>
+</body>
+</html>
