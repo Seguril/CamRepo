@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Convertir devoluciones</title>
+</head>
+<body>
+
+<h2>Convertir archivo .txt</h2>
+<input type="file" id="fileInput" accept=".txt">
+<button onclick="convert()">Convertir y descargar</button>
+
+<pre id="preview"></pre>
+
+<script>
+function convert() {
+    const file = document.getElementById("fileInput").files[0];
+    if (!file) return alert("Selecciona un archivo .txt");
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const text = e.target.result;
+
+        const lines = text.split("\n").map(l => l.trim()).filter(l => l);
+
+        // Buscar fecha en primeras líneas
+        let fecha = null;
+        for (let i = 0; i < Math.min(8, lines.length); i++) {
+            const d = lines[i].match(/(\d{1,2}\/\d{1,2}\/\d{4})/);
+            const h = lines[i].match(/(\d{1,2}:\d{2}:\d{2})/);
+            if (d) {
+                fecha = d[1] + ", " + (h ? h[1] : "00:00:00");
+                break;
+            }
+        }
+
+        if (!fecha) {
+            const now = new Date();
+            fecha =
+                String(now.getDate()).padStart(2, "0") + "/" +
+                String(now.getMonth()+1).padStart(2, "0") + "/" +
+                now.getFullYear() + ", " +
+                now.toTimeString().slice(0, 8);
+        }
+
+        // Buscar IDs tipo A13672083 → 13672083
+        const result = [];
+
+        lines.forEach(l => {
+            const m = l.match(/([A-Za-z]*\d{5,})/);
+            if (m) {
+                const id = m[1].replace(/\D/g, "");  // quitar letras
+                result.push(id + "|" + fecha + "|Sin ubicación");
+            }
+        });
+
+        if (result.length === 0) {
+            alert("No se encontraron IDs.");
+            return;
+        }
+
+        const finalText = result.join("\n");
+
+        // Descargar archivo
+        const blob = new Blob([finalText], { type: "text/plain" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "devolucion.txt";
+        a.click();
+
+        // Vista previa
+        document.getElementById("preview").textContent =
+            finalText.split("\n").slice(0, 20).join("\n");
+    };
+
+    reader.readAsText(file);
+}
+</script>
+
+</body>
+</html>
