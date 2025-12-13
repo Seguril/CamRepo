@@ -4,6 +4,9 @@ body {
   color: #f5f5dc;
   margin: 0;
   padding: 20px;
+  font-size: 1rem; /* base para escalado */
+  padding: 1rem;
+
 }
 
 h1 {

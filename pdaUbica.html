@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📦 Lector de Palets con Ubicación</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <h1>📦 Escaneo de Palets con Ubicación</h1>
+
+  <div class="archivo">
+    <label>📍 Ubicación actual:</label>
+    <input type="text" id="ubicacion" placeholder="Ej. Zona A o Camión 3">
+    <br>
+    <button onclick="descargarArchivoDat()">💾 Descargar .DAT</button>
+    <button id="btnCargar">📂 Cargar archivo .DAT</button>
+    <input type="file" id="archivoDat" accept=".dat" style="display:none;">
+  </div>
+
+  <!-- Campo para ingreso manual -->
+  <div class="manual">
+    <label>🔢 Ingresar código:</label>
+    <input type="text" id="codigoManual" placeholder="Ej. 123456789" autofocus>
+    <button onclick="agregarCodigo()">➕ Agregar</button>
+  </div>
+
+  <p id="scanResult">📡 Esperando ingreso manual...</p>
+
+  <div class="table-wrapper">
+    <table id="tablaContenedores">
+      <thead>
+       <thead>
+  <tr>
+    <th>#</th>
+    <th>Código</th>
+    <th class="fecha">Fecha</th>
+    <th class="ubicacion">Ubicación</th>
+    <th class="accion">Acción</th>
+  </tr>
+</thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="mensajeCamara">📡 Listo para ingresar códigos</div>
+
+  <script src="script2.js"></script>
+</body>
+</html>
