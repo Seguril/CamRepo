@@ -3,7 +3,7 @@ const codigosDesdeArchivo = {}; // solo para comparación
 let ultimoCodigoLeido = "";
 let tiempoUltimoEscaneo = 0;
 let contadorOrden = 0;
-const LONGITUD_MINIMA = 8;
+const LONGITUD_MINIMA = 2;
 
 function iniciarCamara() {
   Quagga.init(
