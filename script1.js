@@ -157,7 +157,7 @@ function cargarArchivoDat() {
 
       if (
         codigo &&
-        /^[A-Za-z0-9]+$/.test(codigo) &&   // 🔹 ahora acepta letras y números
+        /^[A-Za-z]?\d+$/.test(codigo) &&   // 🔹 opcional una letra al inicio, luego solo números
         codigo.length >= LONGITUD_MINIMA &&
         !codigosDesdeArchivo[codigo]
       ) {
@@ -165,8 +165,8 @@ function cargarArchivoDat() {
           fecha: fecha || "--/--/----, --:--:--",
           ubicacion: ubicacion || "Sin ubicación",
         };
-        cargados++;
-      }
+      cargados++;
+    }
     });
 
     mostrarMensaje(
