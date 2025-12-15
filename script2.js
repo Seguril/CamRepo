@@ -3,10 +3,10 @@ const codigosDesdeArchivo = {};
 let contadorOrden = 0;
 const LONGITUD_MINIMA = 2;
 
-//Alfanúmerico
-
 function procesarCodigoManual(codigo) {
-  codigo = codigo.trim();
+  // Limpieza básica
+  codigo = codigo.trim();              // quita espacios
+  codigo = codigo.replace(/[\r\n\t]/g, ""); // quita saltos de línea/tabuladores
 
   if (!codigo) {
     mostrarMensaje("❌ Código vacío", "error");
@@ -33,7 +33,6 @@ function procesarCodigoManual(codigo) {
     mostrarMensaje(`✅ ${codigo} agregado correctamente`, "ok");
   }
 }
-
 function agregarContenedor(codigo, fecha = null, ubicacion = null) {
   const fechaRegistro = fecha || new Date().toLocaleString();
   const ubicacionActual =
