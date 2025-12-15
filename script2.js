@@ -3,6 +3,8 @@ const codigosDesdeArchivo = {};
 let contadorOrden = 0;
 const LONGITUD_MINIMA = 2;
 
+
+
 function procesarCodigoManual(codigo) {
   codigo = codigo.trim();
   codigo = codigo.replace(/[\r\n\t]/g, "");
