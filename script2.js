@@ -106,12 +106,12 @@ function cargarArchivoDat() {
 
       if (
         codigo &&
-        /^\d+$/.test(codigo) &&
+        /^[A-Za-z0-9]+$/.test(codigo) &&   // 🔹 ahora acepta letras y números
         codigo.length >= LONGITUD_MINIMA &&
         !codigosDesdeArchivo[codigo]
       ) {
         codigosDesdeArchivo[codigo] = {
-          fecha: fecha || "--/--/----, --:--:-- --.",
+          fecha: fecha || "--/--/----, --:--:--",
           ubicacion: ubicacion || "Sin ubicación",
         };
         cargados++;
