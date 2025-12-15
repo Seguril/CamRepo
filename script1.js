@@ -31,16 +31,16 @@ function iniciarCamara() {
 }
 
 function procesarCodigo(data) {
-  let codigo = data.codeResult.code.replace(/^[A-Za-z]+/, "");
+  let codigo = data.codeResult.code.trim();
   const ahora = Date.now();
 
-  if (codigo === ultimoCodigoLeido && ahora - tiempoUltimoEscaneo < 3000)
-    return;
+  if (codigo === ultimoCodigoLeido && ahora - tiempoUltimoEscaneo < 3000) return;
   ultimoCodigoLeido = codigo;
   tiempoUltimoEscaneo = ahora;
 
-  if (!/^\d+$/.test(codigo)) {
-    mostrarMensaje(`❌ Código ignorado (no numérico): ${codigo}`, "error");
+  // 🔹 Permitir una letra opcional al inicio y luego solo números
+  if (!/^[A-Za-z]?\d+$/.test(codigo)) {
+    mostrarMensaje(`❌ Código inválido: ${codigo}`, "error");
     return;
   }
 
@@ -51,16 +51,10 @@ function procesarCodigo(data) {
 
   if (codigosDesdeArchivo[codigo]) {
     const { fecha, ubicacion } = codigosDesdeArchivo[codigo];
-    mostrarMensaje(
-      `⚠️ ${codigo} ya registrado el ${fecha} (${ubicacion})`,
-      "warn"
-    );
+    mostrarMensaje(`⚠️ ${codigo} ya registrado el ${fecha} (${ubicacion})`, "warn");
   } else if (codigosRegistrados[codigo]) {
     const { fecha, ubicacion } = codigosRegistrados[codigo];
-    mostrarMensaje(
-      `⚠️ ${codigo} ya escaneado el ${fecha} (${ubicacion})`,
-      "warn"
-    );
+    mostrarMensaje(`⚠️ ${codigo} ya escaneado el ${fecha} (${ubicacion})`, "warn");
   } else {
     agregarContenedor(codigo);
     codigosDesdeArchivo[codigo] = {
