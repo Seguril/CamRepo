@@ -3,6 +3,8 @@ const codigosDesdeArchivo = {};
 let contadorOrden = 0;
 const LONGITUD_MINIMA = 2;
 
+//Alfanúmerico
+
 function procesarCodigoManual(codigo) {
   codigo = codigo.trim();
 
