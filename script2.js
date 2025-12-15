@@ -5,35 +5,31 @@ const LONGITUD_MINIMA = 2;
 
 function procesarCodigoManual(codigo) {
   codigo = codigo.trim();
+
   if (!codigo) {
     mostrarMensaje("❌ Código vacío", "error");
     return;
   }
 
-codigo = codigo.replace(/\s|-/g, ""); // elimina espacios y guiones
-if (!/^\d+$/.test(codigo)) {
-  mostrarMensaje(`❌ Código inválido: ${codigo}`, "error");
-  return;
-}
-
-
+  // 🔹 Permitir letras y números
+  if (!/^[A-Za-z0-9]+$/.test(codigo)) {
+    mostrarMensaje(`❌ Código inválido: ${codigo}`, "error");
+    return;
+  }
 
   if (codigo.length < LONGITUD_MINIMA) {
     mostrarMensaje(`❌ Código demasiado corto: ${codigo}`, "error");
     return;
   }
 
-if (codigosRegistrados[codigo]) {
-  // Ya está en la tabla actual
-  mostrarMensaje(`⚠️ ${codigo} ya ingresado`, "warn", codigo);
-} else if (codigosDesdeArchivo[codigo]) {
-  // Ya estaba en el fichero cargado
-  mostrarMensaje(`⚠️ ${codigo} ya registrado en archivo`, "warn", codigo);
-} else {
-  // Nuevo código
-  agregarContenedor(codigo);
-  mostrarMensaje(`✅ ${codigo} agregado correctamente`, "ok");
-}
+  if (codigosRegistrados[codigo]) {
+    mostrarMensaje(`⚠️ ${codigo} ya ingresado`, "warn", codigo);
+  } else if (codigosDesdeArchivo[codigo]) {
+    mostrarMensaje(`⚠️ ${codigo} ya registrado en archivo`, "warn", codigo);
+  } else {
+    agregarContenedor(codigo);
+    mostrarMensaje(`✅ ${codigo} agregado correctamente`, "ok");
+  }
 }
 
 function agregarContenedor(codigo, fecha = null, ubicacion = null) {
