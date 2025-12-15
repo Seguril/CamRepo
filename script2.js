@@ -4,17 +4,16 @@ let contadorOrden = 0;
 const LONGITUD_MINIMA = 2;
 
 function procesarCodigoManual(codigo) {
-  // Limpieza básica
-  codigo = codigo.trim();              // quita espacios
-  codigo = codigo.replace(/[\r\n\t]/g, ""); // quita saltos de línea/tabuladores
+  codigo = codigo.trim();
+  codigo = codigo.replace(/[\r\n\t]/g, "");
 
   if (!codigo) {
     mostrarMensaje("❌ Código vacío", "error");
     return;
   }
 
-  // 🔹 Permitir letras y números
-  if (!/^[A-Za-z0-9]+$/.test(codigo)) {
+  // 🔹 Permitir una letra al inicio, luego solo números
+  if (!/^[A-Za-z]?\d+$/.test(codigo)) {
     mostrarMensaje(`❌ Código inválido: ${codigo}`, "error");
     return;
   }
