@@ -10,10 +10,13 @@ function procesarCodigoManual(codigo) {
     return;
   }
 
-  if (!/^\d+$/.test(codigo)) {
-    mostrarMensaje(`❌ Código inválido: ${codigo}`, "error");
-    return;
-  }
+codigo = codigo.replace(/\s|-/g, ""); // elimina espacios y guiones
+if (!/^\d+$/.test(codigo)) {
+  mostrarMensaje(`❌ Código inválido: ${codigo}`, "error");
+  return;
+}
+
+
 
   if (codigo.length < LONGITUD_MINIMA) {
     mostrarMensaje(`❌ Código demasiado corto: ${codigo}`, "error");
