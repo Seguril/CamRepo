@@ -33,37 +33,40 @@ function iniciarCamara() {
 }
 
 function procesarCodigo(data) {
-  let codigo = data.codeResult.code.trim();
+  let codigoOriginal = data.codeResult.code.trim();
   const ahora = Date.now();
 
-  if (codigo === ultimoCodigoLeido && ahora - tiempoUltimoEscaneo < 3000) return;
-  ultimoCodigoLeido = codigo;
+  if (codigoOriginal === ultimoCodigoLeido && ahora - tiempoUltimoEscaneo < 3000) return;
+  ultimoCodigoLeido = codigoOriginal;
   tiempoUltimoEscaneo = ahora;
 
-  // 🔹 Permitir una letra opcional al inicio y luego solo números
-  if (!/^[A-Za-z]?\d+$/.test(codigo)) {
-    mostrarMensaje(`❌ Código inválido: ${codigo}`, "error");
+  // Validación: letra opcional al inicio + números
+  if (!/^[A-Za-z]?\d+$/.test(codigoOriginal)) {
+    mostrarMensaje(`❌ Código inválido: ${codigoOriginal}`, "error");
     return;
   }
 
-  if (codigo.length < LONGITUD_MINIMA) {
-    mostrarMensaje(`❌ Código demasiado corto: ${codigo}`, "error");
+  if (codigoOriginal.length < LONGITUD_MINIMA) {
+    mostrarMensaje(`❌ Código demasiado corto: ${codigoOriginal}`, "error");
     return;
   }
 
-  if (codigosDesdeArchivo[codigo]) {
-    const { fecha, ubicacion } = codigosDesdeArchivo[codigo];
-    mostrarMensaje(`⚠️ ${codigo} ya registrado el ${fecha} (${ubicacion})`, "warn");
-  } else if (codigosRegistrados[codigo]) {
-    const { fecha, ubicacion } = codigosRegistrados[codigo];
-    mostrarMensaje(`⚠️ ${codigo} ya escaneado el ${fecha} (${ubicacion})`, "warn");
+  // Normalizar: quitar letra inicial si existe
+  const codigoBase = codigoOriginal.replace(/^[A-Za-z]/, "");
+
+  if (codigosDesdeArchivo[codigoBase]) {
+    const { fecha, ubicacion } = codigosDesdeArchivo[codigoBase];
+    mostrarMensaje(`⚠️ ${codigoOriginal} ya registrado el ${fecha} (${ubicacion})`, "warn");
+  } else if (codigosRegistrados[codigoBase]) {
+    const { fecha, ubicacion } = codigosRegistrados[codigoBase];
+    mostrarMensaje(`⚠️ ${codigoOriginal} ya escaneado el ${fecha} (${ubicacion})`, "warn");
   } else {
-    agregarContenedor(codigo);
-    codigosDesdeArchivo[codigo] = {
-      fecha: codigosRegistrados[codigo].fecha,
-      ubicacion: codigosRegistrados[codigo].ubicacion,
+    agregarContenedor(codigoBase);
+    codigosDesdeArchivo[codigoBase] = {
+      fecha: codigosRegistrados[codigoBase].fecha,
+      ubicacion: codigosRegistrados[codigoBase].ubicacion,
     };
-    mostrarMensaje(`✅ ${codigo} agregado correctamente`, "ok");
+    mostrarMensaje(`✅ ${codigoOriginal} agregado correctamente`, "ok");
   }
 }
 

@@ -14,7 +14,7 @@ function procesarCodigoManual(codigo) {
     return;
   }
 
-  // 🔹 Permitir una letra al inicio, luego solo números
+  // Validación: letra opcional al inicio + números
   if (!/^[A-Za-z]?\d+$/.test(codigo)) {
     mostrarMensaje(`❌ Código inválido: ${codigo}`, "error");
     return;
@@ -25,15 +25,19 @@ function procesarCodigoManual(codigo) {
     return;
   }
 
-  if (codigosRegistrados[codigo]) {
+  // 🔹 Normalizar: quitar letra inicial si existe
+  const codigoBase = codigo.replace(/^[A-Za-z]/, "");
+
+  if (codigosRegistrados[codigoBase]) {
     mostrarMensaje(`⚠️ ${codigo} ya ingresado`, "warn", codigo);
-  } else if (codigosDesdeArchivo[codigo]) {
+  } else if (codigosDesdeArchivo[codigoBase]) {
     mostrarMensaje(`⚠️ ${codigo} ya registrado en archivo`, "warn", codigo);
   } else {
-    agregarContenedor(codigo);
+    agregarContenedor(codigoBase);
     mostrarMensaje(`✅ ${codigo} agregado correctamente`, "ok");
   }
 }
+
 function agregarContenedor(codigo, fecha = null, ubicacion = null) {
   const fechaRegistro = fecha || new Date().toLocaleString();
   const ubicacionActual =
