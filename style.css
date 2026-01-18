@@ -219,7 +219,7 @@ button:hover {
   justify-content: center;
 }
 
-#crosshair {
+/* #crosshair {
   width: 120px;
   height: 120px;
   border: 2px solid rgba(255, 255, 255, 0.8);
@@ -229,7 +229,7 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
+} */
 
 /* Mensaje dentro del área de cámara */
 #mensajeCamara {

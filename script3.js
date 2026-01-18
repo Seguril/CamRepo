@@ -27,6 +27,60 @@ function normalizarCodigo(codigo) {
 }
 
 
+function normalizarCodigo(codigo) {
+  return codigo.trim().replace(/^[A-Za-z]/, "");
+}
+
+/* ============================================================
+   INICIAR CÁMARA Y ESCANEO
+   ============================================================ */
+function iniciarCamara() {
+  Quagga.init(
+    {
+      inputStream: {
+        name: "Live",
+        type: "LiveStream",
+        target: document.querySelector("#camara"),
+        constraints: { facingMode: "environment" },
+      },
+      decoder: { readers: ["code_39_reader"] },
+    },
+    function (err) {
+      if (err) {
+        console.error("Error al iniciar Quagga:", err);
+        mostrarMensaje("❌ No se pudo acceder a la cámara", "error");
+        return;
+      }
+      Quagga.start();
+      mostrarMensaje("📡 Escaneo activo...");
+    }
+  );
+
+  Quagga.onDetected(procesarCodigo);
+}
+
+
+let ultimoCodigoLeido = "";
+let tiempoUltimaLectura = 0;
+
+function procesarCodigo(result) {
+  const codigoDetectado = result.codeResult.code;
+  if (!codigoDetectado) return;
+
+  const ahora = Date.now();
+
+  // Evitar lecturas duplicadas en menos de 1 segundo
+  if (codigoDetectado === ultimoCodigoLeido && ahora - tiempoUltimaLectura < 1000) {
+    return;
+  }
+
+  ultimoCodigoLeido = codigoDetectado;
+  tiempoUltimaLectura = ahora;
+
+  // Enviar el código EXACTAMENTE igual que si lo escribieras a mano
+  procesarCodigoManual(codigoDetectado);
+}
+
 /* ============================================================
    PROCESAR CÓDIGO MANUAL
    ============================================================ */

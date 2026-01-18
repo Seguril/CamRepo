@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Soluciones_Vegas_Seguidad_todo_sofware_para_tu_empresa." />
+  <meta property="og:title" content="VegaSeguridad" />
+  <meta property="og:description" content="Un lugar donde la Palabra transforma el corazón y da espacio para crecer." />
+  <meta property="og:image" content="https://s3.eu-west-2.amazonaws.com/transeop/Blog/BLOG-PDA.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://seguril.github.io/CamRepo/pdaUbica" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VegaSeguridad" />
+  <meta name="twitter:description" content="Soluciones_Vegas_Seguidad_todo_sofware_para_tu_empresa." />
+  <meta name="twitter:image" content="https://tse4.mm.bing.net/th/id/OIP.S3az6ep9mNAbshNxfNnLcgHaEK?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/10823/10823560.png" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style2.css">
+  <title>📦 Lector de Palets con Ubicación</title>
+  <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+  <h1>📦 Escaneo de Palets</h1>
+
+  <div class="archivo">
+    <label>📍 Ubicación actual:</label>
+    <input type="text" id="ubicacion" placeholder="Ej. Zona A o Camión 3">
+    <br>
+    <button onclick="descargarArchivoDat()">💾 Descargar .DAT</button>
+    <button id="btnCargar">📂 Cargar archivo .DAT</button>
+    <input type="file" id="archivoDat" accept=".dat" style="display:none;">
+  </div>
+
+<button onclick="iniciarCamara()">📷 Iniciar cámara</button>
+<div id="camara" style="width: 100%; height: 50px;"></div>
+
+  <!-- Campo para ingreso manual -->
+  <div class="manual">
+    <label>🔢 Ingresar código:</label>
+    <input type="text" id="codigoManual" placeholder="Ej. 123456789" autofocus>
+    <button onclick="agregarCodigo()">➕ Agregar</button>
+  </div>
+
+  <p id="scanResult">📡 Esperando ingreso manual...</p>
+
+  <div class="table-wrapper">
+    <table id="tablaContenedores">
+      <thead>
+       <thead>
+  <tr>
+    <th>#</th>
+    <th>Código</th>
+    <th class="fecha">Fecha</th>
+    <th class="ubicacion">Ubicación</th>
+    <th class="accion">Acción</th>
+  </tr>
+</thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="mensajeCamara">📡 Listo para ingresar códigos</div>
+<script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
+  <script src="script3.js"></script>
+</body>
+</html>
